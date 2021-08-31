@@ -1,0 +1,10 @@
+resolver: lts-18.0
+
+packages:
+- .
+
+extra-deps:
+- refined-0.6.2
+- these-skinny-0.7.4
+- quickspec-2.1.5
+- twee-lib-2.2

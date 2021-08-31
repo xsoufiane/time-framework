@@ -1,0 +1,92 @@
+name:                time-framework
+version:             0.0.1
+github:              "xsoufiane/time-framework"
+license:             BSD3
+author:              "Soufiane Maguerra"
+maintainer:          "soufiane.maguerra@commercetools.com"
+copyright:           "2021 Soufiane Maguerra"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/xsoufiane/time-framework#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- either
+- refined
+- singletons
+- template-haskell
+- QuickCheck
+- smallcheck
+- tasty
+- tasty-smallcheck
+
+library:
+  source-dirs: src
+  exposed-modules:
+  - Data.Chronon
+  - Data.Period
+  - Data.Period.PeriodObs
+  - Data.Period.PeriodChrononObs
+  - Data.Period.DifferentPeriodObs
+  - Test.Relation.Identity
+  - Test.Relation.Identity.Laws
+  - Test.Relation.Order.StrictPartialOrder
+  - Test.Relation.Order.StrictPartialOrder.Laws
+  - Test.Relation.Order.LinearOrder
+  - Test.Relation.Order.LinearOrder.Laws
+  - Test.Relation.Order.LeftLinearOrder
+  - Test.Relation.Order.LeftLinearOrder.Laws
+  - Test.Relation.Order.RightLinearOrder
+  - Test.Relation.Order.RightLinearOrder.Laws
+  - Test.Relation.Order.PartialCyclicOrder
+  - Test.Relation.Order.PartialCyclicOrder.Laws
+  - Test.Relation.Order.CyclicOrder
+  - Test.Relation.Order.CyclicOrder.Laws
+  - Test.Relation.Order.PartialOrder
+  - Test.Relation.Order.PartialOrder.Laws
+  - Test.Relation.Order.TotalOrder
+  - Test.Relation.Order.TotalOrder.Laws
+  - Test.Relation.Order.Synchronicity
+  - Test.Relation.Order.Synchronicity.Laws
+  - Test.Relation.Order.Synchronicity.LinearOrder.Laws
+  - Test.Relation.Order.Synchronicity.Concurrency.Laws
+  - Test.Relation.Order.Concurrency
+  - Test.Relation.Order.Concurrency.Laws
+  - Test.Relation.Order.Concurrency.LinearOrder.Laws
+  - Test.Relation.Order.Betweenness
+  - Test.Relation.Order.Betweenness.Laws
+  - Test.Relation.Order.Begin
+  - Test.Relation.Order.Begin.Laws
+  - Test.Relation.Order.Begin.LinearOrder.Laws
+  - Test.Relation.Order.End
+  - Test.Relation.Order.End.Laws
+  - Test.Relation.Order.End.LinearOrder.Laws
+
+tests:
+  time-framework-spec:
+    main: Spec.hs
+    source-dirs:
+    - test/spec
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - time-framework
+    - QuickCheck
+    - quickcheck-classes
+    - smallcheck
+    - tasty
+    - tasty-quickcheck
+    - tasty-smallcheck
+    - string-interpolate
