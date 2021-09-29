@@ -6,10 +6,10 @@
 module Test.Relation.Order.PartialCyclicOrder.Laws (laws) where
 
 import Prelude hiding (cycle)
-import Test.QuickCheck 
+import Test.QuickCheck
 
-import Test.Relation.Order.PartialCyclicOrder 
-  
+import Test.Relation.Order.PartialCyclicOrder
+
 ----------------------------------------------------
 
 type Constraints t = (Arbitrary t, PartialCyclicOrder t, Show t)

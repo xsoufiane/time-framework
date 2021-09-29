@@ -52,10 +52,10 @@ data ValidPeriodBounds
 
 instance ChrononObs t => Predicate ValidPeriodBounds (Period c t) where
     validate _ (Period x y)
-        | (C.<) y x = throwRefineSomeException
+        | (C.<) x y = Nothing
+        | otherwise = throwRefineSomeException
             (typeRep (Proxy :: Proxy ValidPeriodBounds))
             (SomeException InvalidPeriod)
-        | otherwise = Nothing
 
 -- | Smart Constructor
 period
