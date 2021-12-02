@@ -33,6 +33,7 @@ dependencies:
 library:
   source-dirs: src
   exposed-modules:
+  - Data.Time
   - Data.Chronon
   - Data.Period
   - Data.Period.PeriodObs

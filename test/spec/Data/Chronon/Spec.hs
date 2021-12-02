@@ -1,5 +1,3 @@
-{-# OPTIONS_GHC -fno-warn-orphans #-}
-
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TypeApplications #-}
@@ -68,63 +66,64 @@ import Test.Relation.Order.End.LinearOrder.Laws as LinearEnd
 
 -------------------------------------
 
-data instance Chronon = Chronon Int deriving (Eq, Show)
+newtype IntChronon = Chronon Int deriving (Eq, Show)
+instance Chronon IntChronon
 
 -- | Observations
-instance ChrononObs Chronon where
+instance ChrononObs IntChronon where
      Chronon x < Chronon y = (P.<) x y
      Chronon x === Chronon y = (P.==) x y
      
-instance CyclicChronon Chronon where     
+instance CyclicChronon IntChronon where     
      cycle x y z = x < y && y < z || y < z && z < x || z < x && x < y
      
-instance SynchronousChronon Chronon where
+instance SynchronousChronon IntChronon where
     synchronous x y = x == y
 
-instance ConcurrentChronon Chronon where
+instance ConcurrentChronon IntChronon where
     concurrent x y = x == y
      
 -- | Instances
-instance Arbitrary Chronon where
+instance Arbitrary IntChronon where
     arbitrary = Chronon <$> arbitrary
 
-instance Serial IO Chronon where
+instance Serial IO IntChronon where
     series = cons1 Chronon
   
-instance Identity Chronon where
+instance Identity IntChronon where
     (===) = (Chronon.===)
 
-instance StrictPartialOrder Chronon where
+instance StrictPartialOrder IntChronon where
     (<) = (Chronon.<)
 
-instance LinearOrder Chronon
+instance LinearOrder IntChronon
 
-instance RightLinearOrder Chronon
+instance RightLinearOrder IntChronon
 
-instance LeftLinearOrder Chronon
+instance LeftLinearOrder IntChronon
 
-instance PartialCyclicOrder Chronon where
+instance PartialCyclicOrder IntChronon where
     cycle = Chronon.cycle
 
-instance CyclicOrder Chronon
+instance CyclicOrder IntChronon
 
-instance PartialOrder Chronon where
+instance PartialOrder IntChronon where
     (<=) = (Chronon.<=)
 
-instance TotalOrder Chronon
+instance TotalOrder IntChronon
 
-instance Synchronicity Chronon where
+instance Synchronicity IntChronon where
     synchronous = Chronon.synchronous
 
-instance Concurrency Chronon where
+instance Concurrency IntChronon where
     concurrent = Chronon.concurrent
     
-instance Betweenness Chronon where
+instance Betweenness IntChronon where
     betweenness = Chronon.betweenness
 
-instance Begin Chronon
+instance Begin IntChronon
 
-instance End Chronon
+instance End IntChronon
 
 -- | spec
 spec :: TestTree
@@ -132,26 +131,27 @@ spec = testGroup "Chronon Spec" [ relationLaws, orderLaws ]
 
 relationLaws :: TestTree
 relationLaws = testGroup "Relation Laws"
-    [ QC.testProperties "Identity" $ Identity.laws @Chronon
+    [ QC.testProperties "Identity" $ Identity.laws @IntChronon
     ]
 
 orderLaws :: TestTree
 orderLaws = testGroup "Order Laws"
-    [ QC.testProperties "StrictPartialOrder" $ StrictPartialOrder.laws @Chronon
-    , QC.testProperties "LinearOrder" $ LinearOrder.laws @Chronon
-    , QC.testProperties "RightLinearOrder" $ RightLinearOrder.laws @Chronon
-    , QC.testProperties "LeftLinearOrder" $ LeftLinearOrder.laws @Chronon
-    , QC.testProperties "PartialCyclicOrder" $ PartialCyclicOrder.laws @Chronon
-    , QC.testProperties "CyclicOrder" $ CyclicOrder.laws @Chronon
-    , QC.testProperties "PartialOrder" $ PartialOrder.laws @Chronon
-    , QC.testProperties "TotalOrder" $ TotalOrder.laws @Chronon
+    [ QC.testProperties "StrictPartialOrder" $ StrictPartialOrder.laws @IntChronon
+    , QC.testProperties "LinearOrder" $ LinearOrder.laws @IntChronon
+    , QC.testProperties "RightLinearOrder" $ RightLinearOrder.laws @IntChronon
+    , QC.testProperties "LeftLinearOrder" $ LeftLinearOrder.laws @IntChronon
+    , QC.testProperties "PartialCyclicOrder" $ PartialCyclicOrder.laws @IntChronon
+    , QC.testProperties "CyclicOrder" $ CyclicOrder.laws @IntChronon
+    , QC.testProperties "PartialOrder" $ PartialOrder.laws @IntChronon
+    , QC.testProperties "TotalOrder" $ TotalOrder.laws @IntChronon
     , QC.testProperties "Synchronicity" $
-          Synchronicity.laws @Chronon ++ LinearSynchronicity.laws @Chronon ++ ConcurrentSynchronicity.laws @Chronon
-    , QC.testProperties "Concurrency" $ Concurrency.laws @Chronon ++ LinearConcurrency.laws @Chronon
-    , QC.testProperties "Betweenness" $ Betweenness.laws @Chronon
+          Synchronicity.laws @IntChronon ++ LinearSynchronicity.laws @IntChronon ++
+              ConcurrentSynchronicity.laws @IntChronon
+    , QC.testProperties "Concurrency" $ Concurrency.laws @IntChronon ++ LinearConcurrency.laws @IntChronon
+    , QC.testProperties "Betweenness" $ Betweenness.laws @IntChronon
     , localOption (SmallCheckDepth 100) $
-          testGroup "Begin" $ uncurry SC.testProperty <$> Begin.laws @IO @Chronon ++ LinearBegin.laws @IO @Chronon
+          testGroup "Begin" $ uncurry SC.testProperty <$> Begin.laws @IO @IntChronon ++ LinearBegin.laws @IO @IntChronon
     , localOption (SmallCheckDepth 100) $
-          testGroup "End" $ uncurry SC.testProperty <$> End.laws @IO @Chronon ++ LinearEnd.laws @IO @Chronon
+          testGroup "End" $ uncurry SC.testProperty <$> End.laws @IO @IntChronon ++ LinearEnd.laws @IO @IntChronon
     ]
   

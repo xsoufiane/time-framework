@@ -27,16 +27,16 @@ import qualified Test.Relation.Order.StrictPartialOrder.Laws as StrictPartialOrd
 -----------------------------------------------------------------
 
 -- | Data
-data instance Chronon Int = Chronon Int
-newtype IntChronon = IntChronon (Chronon Int)
+newtype IntChronon = Chronon Int
+instance Chronon IntChronon
 newtype ClosedPeriod = ClosedPeriod (Period 'Closed IntChronon)
 
 -- | Instances
 instance Arbitrary IntChronon where
-    arbitrary = IntChronon . Chronon <$> arbitrary
+    arbitrary = Chronon <$> arbitrary
     
 instance Show IntChronon where
-    show (IntChronon (Chronon x)) = [i|Chronon #{x}|]
+    show (Chronon x) = [i|Chronon #{x}|]
     
 instance Arbitrary ClosedPeriod where
     arbitrary = ClosedPeriod <$> suchThatMap (applyArbitrary2 $ period SClosed) rightToMaybe
@@ -45,7 +45,7 @@ instance Show ClosedPeriod where
     show (ClosedPeriod p) = [i|Period(#{inf p}, #{sup p})|]
 
 instance Eq IntChronon where
-    IntChronon (Chronon x) == IntChronon (Chronon y) = (Pr.==) x y
+    Chronon x == Chronon y = (Pr.==) x y
     
 instance Eq (Period 'Closed IntChronon) where
     x == y = (Pr.==) (inf x) (inf y) && (Pr.==) (sup x) (sup y)
@@ -55,8 +55,8 @@ instance Eq ClosedPeriod where
 
 -- | Observations
 instance ChrononObs IntChronon where
-     IntChronon (Chronon x) < IntChronon (Chronon y) = (Pr.<) x y
-     IntChronon (Chronon x) === IntChronon (Chronon y) = (Pr.==) x y
+     Chronon x < Chronon y = (Pr.<) x y
+     Chronon x === Chronon y = (Pr.==) x y
 
 -- | Axiomatization
 instance StrictPartialOrder ClosedPeriod where

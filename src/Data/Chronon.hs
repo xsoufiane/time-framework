@@ -1,6 +1,4 @@
 {-# LANGUAGE ConstrainedClassMethods #-}
-{-# LANGUAGE PolyKinds #-}
-{-# LANGUAGE TypeFamilies #-}
 
 module Data.Chronon
     ( -- * Types  
@@ -17,10 +15,10 @@ import Prelude hiding ((<), (<=))
 
 ----------------------------------------------------------------------    
 
-data family Chronon :: k
+class Chronon t
 
 -- | Observations
-class ChrononObs t where
+class Chronon t => ChrononObs t where
     (<) :: t -> t -> Bool
      
     (>) :: t -> t -> Bool
@@ -38,11 +36,11 @@ class ChrononObs t where
     (>=) :: Eq t => t -> t -> Bool
     x >= y = y <= x
     
-class CyclicChronon t where    
+class Chronon t => CyclicChronon t where
     cycle :: t -> t -> t -> Bool
 
-class SynchronousChronon t where
+class ChrononObs t => SynchronousChronon t where
     synchronous :: t -> t -> Bool
 
-class ConcurrentChronon t where
+class ChrononObs t => ConcurrentChronon t where
     concurrent :: t -> t -> Bool
