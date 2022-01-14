@@ -1,10 +1,19 @@
+{-# OPTIONS_GHC -fno-warn-redundant-constraints #-}
+
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UndecidableInstances #-}
 
-module Data.Time (Time) where
+module Data.Time 
+    (
+      Time
+    , module Data.Chronon
+    , module Data.Period
+    ) where
 
-import Data.Chronon (Chronon)
-import Data.Period (Period)
+import Data.Chronon
+import Data.Period
+
+-------------------------------------------
 
 class Internal t => Time t
 instance Internal t => Time t

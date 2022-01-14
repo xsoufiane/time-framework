@@ -6,7 +6,7 @@ import qualified Data.Period.Spec as PeriodSpec
 -----------------------------------
 
 main :: IO ()
-main = defaultMain $ testGroup "Trajectory Algebra Spec"
+main = defaultMain $ testGroup "Time Algebra Spec"
     [ ChrononSpec.spec
     , PeriodSpec.spec
     ]
