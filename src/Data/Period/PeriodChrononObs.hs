@@ -3,32 +3,29 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE KindSignatures #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE UndecidableInstances #-}
 
-module Data.Period.PeriodChrononObs
-    ( -- * Observations
-      PeriodChrononObs(..)
-    ) where
+module Data.Period.PeriodChrononObs (PeriodChrononObs(member)) where
 
 import Prelude hiding ((<), (<=))
-  
-import Data.Chronon (ChrononObs((<), (<=)))
-import Data.Period (Period(inf, sup), PeriodType(..))
 
------------------------------------------------------------
+import Data.Chronon (Chronon)
+import Data.Period (Period(inf, sup), PeriodType(..))
+import Relation.Order (Order((<), (<=)))
+
+-------------------------------------------------------------------------------------------
  
 -- | Period Chronon Observations
-class ChrononObs t => PeriodChrononObs (c :: PeriodType) t where
+class Chronon t => PeriodChrononObs (c :: PeriodType) t where
     member :: t -> Period c t -> Bool
 
-instance ChrononObs t => PeriodChrononObs 'Open t where
+instance (Chronon t, Order t) => PeriodChrononObs 'Open t where
     member t p = inf p < t && t < sup p
 
-instance (ChrononObs t, Eq t) => PeriodChrononObs 'RightClosed t where
+instance (Chronon t, Eq t, Order t) => PeriodChrononObs 'RightClosed t where
     member t p = inf p < t && t <= sup p
 
-instance (ChrononObs t, Eq t) => PeriodChrononObs 'LeftClosed t where
+instance (Chronon t, Eq t, Order t) => PeriodChrononObs 'LeftClosed t where
     member t p = inf p <= t && t < sup p
 
-instance (ChrononObs t, Eq t) => PeriodChrononObs 'Closed t where
+instance (Chronon t, Eq t, Order t) => PeriodChrononObs 'Closed t where
     member t p = inf p <= t && t <= sup p

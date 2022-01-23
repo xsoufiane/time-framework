@@ -8,16 +8,16 @@
 
 module Data.Period.DifferentPeriodObs 
     ( -- * Observations
-      PrecedenceObs(..)
-    , PeriodObs(..)
+      PrecedenceObs((<), (>))
+    , PeriodObs(starts, finishes, meets, overlaps, during, contains, includedIn)
     ) where
 
 import Prelude hiding ((<))
   
-import Data.Chronon (ChrononObs)
+import Data.Chronon (Chronon)
 import Data.Period (Period(inf, sup), PeriodType(..))  
   
-import qualified Data.Chronon as C (ChrononObs((<), (<=)))
+import qualified Relation.Order as T (Order((<), (<=)))
   
 -----------------------------------------------------------      
 
@@ -40,36 +40,36 @@ type family RightEdgeEq a b where
     RightEdgeEq _ _ = 'False
 
 -- | Different Period Observations
-class (TypeNeq a b ~ 'True, ChrononObs t) => PrecedenceObs (a :: PeriodType) (b :: PeriodType) t where
+class (TypeNeq a b ~ 'True, Chronon t) => PrecedenceObs (a :: PeriodType) (b :: PeriodType) t where
     (<) :: Period a t -> Period b t -> Bool
 
     (>) :: PrecedenceObs b a t => Period a t -> Period b t -> Bool
     x > y = y < x
 
-instance (TypeNeq 'Open c ~ 'True, ChrononObs t, Eq t) => PrecedenceObs 'Open c t where
-    x < y = (C.<=) (sup x) (inf y)
+instance (TypeNeq 'Open c ~ 'True, Chronon t, T.Order t, Eq t) => PrecedenceObs 'Open c t where
+    x < y = (T.<=) (sup x) (inf y)
 
-instance (ChrononObs t, Eq t) => PrecedenceObs 'Closed 'RightClosed t where
-    x < y = (C.<=) (sup x) (inf y)
+instance (Chronon t, T.Order t, Eq t) => PrecedenceObs 'Closed 'RightClosed t where
+    x < y = (T.<=) (sup x) (inf y)
 
-instance (ChrononObs t, Eq t) => PrecedenceObs 'Closed 'Open t where
-    x < y = (C.<=) (sup x) (inf y)
+instance (Chronon t, T.Order t, Eq t) => PrecedenceObs 'Closed 'Open t where
+    x < y = (T.<=) (sup x) (inf y)
 
-instance ChrononObs t => PrecedenceObs 'Closed 'LeftClosed t where
-    x < y = (C.<) (sup x) (inf y)
+instance (Chronon t, T.Order t) => PrecedenceObs 'Closed 'LeftClosed t where
+    x < y = (T.<) (sup x) (inf y)
 
-class (TypeNeq a b ~ 'True, ChrononObs t) => PeriodObs (a :: PeriodType) (b :: PeriodType) t where
+class (TypeNeq a b ~ 'True, Chronon t, T.Order t) => PeriodObs (a :: PeriodType) (b :: PeriodType) t where
     starts :: (LeftEdgeEq a b ~ 'True, Eq t) => Period a t -> Period b t -> Bool
-    starts x y = inf x == inf y && (C.<) (sup x) (sup y)
+    starts x y = inf x == inf y && (T.<) (sup x) (sup y)
 
     finishes :: (RightEdgeEq a b ~ 'True, Eq t) => Period a t -> Period b t -> Bool
-    finishes x y = (C.<) (inf y) (inf x) &&  sup x == sup y
+    finishes x y = (T.<) (inf y) (inf x) &&  sup x == sup y
 
     meets :: Eq t => Period 'RightClosed t -> Period 'LeftClosed t -> Bool
     meets x y = sup x == inf y
 
     overlaps :: Period a t -> Period b t -> Bool
-    overlaps x y = (C.<) (inf x) (inf y) && (C.<) (inf y) (sup x) && (C.<) (sup x) (sup y)
+    overlaps x y = (T.<) (inf x) (inf y) && (T.<) (inf y) (sup x) && (T.<) (sup x) (sup y)
 
     during :: Period a t -> Period b t -> Bool
 
@@ -79,15 +79,15 @@ class (TypeNeq a b ~ 'True, ChrononObs t) => PeriodObs (a :: PeriodType) (b :: P
     includedIn :: Period a t -> Period b t -> Bool
     includedIn = during
 
-instance (TypeNeq 'Open c ~ 'True, ChrononObs t, Eq t) => PeriodObs 'Open c t where
-    during x y = (C.<) (inf y) (inf x) && (C.<) (sup x) (sup y)
+instance (TypeNeq 'Open c ~ 'True, Chronon t, T.Order t, Eq t) => PeriodObs 'Open c t where
+    during x y = (T.<) (inf y) (inf x) && (T.<) (sup x) (sup y)
 
-instance (ChrononObs t, Eq t) => PeriodObs 'Closed 'RightClosed t where
-    during x y = (C.<=) (inf y) (inf x) && (C.<) (sup x) (sup y)
+instance (T.Order t, Chronon t, Eq t) => PeriodObs 'Closed 'RightClosed t where
+    during x y = (T.<=) (inf y) (inf x) && (T.<) (sup x) (sup y)
 
-instance (ChrononObs t, Eq t) => PeriodObs 'Closed 'Open t where
-    during x y = (C.<=) (inf y) (inf x) && (C.<=) (sup x) (sup y)
+instance (T.Order t, Chronon t, Eq t) => PeriodObs 'Closed 'Open t where
+    during x y = (T.<=) (inf y) (inf x) && (T.<=) (sup x) (sup y)
 
-instance (ChrononObs t, Eq t)  => PeriodObs 'Closed 'LeftClosed t where
-    during x y = (C.<) (inf y) (inf x) && (C.<=) (sup x) (sup y)
+instance (T.Order t, Chronon t, Eq t)  => PeriodObs 'Closed 'LeftClosed t where
+    during x y = (T.<) (inf y) (inf x) && (T.<=) (sup x) (sup y)
     

@@ -1,0 +1,109 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.4.
+--
+-- see: https://github.com/sol/hpack
+
+name:           time-framework
+version:        0.0.1
+description:    Please see the README on GitHub at <https://github.com/xsoufiane/time-framework#readme>
+homepage:       https://github.com/xsoufiane/time-framework#readme
+bug-reports:    https://github.com/xsoufiane/time-framework/issues
+author:         Soufiane Maguerra
+maintainer:     soufiane.maguerra@commercetools.com
+copyright:      2021 Soufiane Maguerra
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/xsoufiane/time-framework
+
+library
+  exposed-modules:
+      Data.Time
+      Data.Chronon
+      Data.Period
+      Data.Period.PeriodChrononObs
+      Data.Period.DifferentPeriodObs
+      Relation.Identity
+      Relation.Order
+      Structure.Identity
+      Structure.Identity.Laws
+      Structure.Order.StrictPartialOrder
+      Structure.Order.StrictPartialOrder.Laws
+      Structure.Order.LinearOrder
+      Structure.Order.LinearOrder.Laws
+      Structure.Order.LeftLinearOrder
+      Structure.Order.LeftLinearOrder.Laws
+      Structure.Order.RightLinearOrder
+      Structure.Order.RightLinearOrder.Laws
+      Structure.Order.PartialCyclicOrder
+      Structure.Order.PartialCyclicOrder.Laws
+      Structure.Order.CyclicOrder
+      Structure.Order.CyclicOrder.Laws
+      Structure.Order.PartialOrder
+      Structure.Order.PartialOrder.Laws
+      Structure.Order.TotalOrder
+      Structure.Order.TotalOrder.Laws
+      Structure.Order.Synchronicity
+      Structure.Order.Synchronicity.Laws
+      Structure.Order.Synchronicity.LinearOrder.Laws
+      Structure.Order.Synchronicity.Concurrency.Laws
+      Structure.Order.Concurrency
+      Structure.Order.Concurrency.Laws
+      Structure.Order.Concurrency.LinearOrder.Laws
+      Structure.Order.Betweenness
+      Structure.Order.Betweenness.Laws
+      Structure.Order.Begin
+      Structure.Order.Begin.Laws
+      Structure.Order.Begin.LinearOrder.Laws
+      Structure.Order.End
+      Structure.Order.End.Laws
+      Structure.Order.End.LinearOrder.Laws
+  other-modules:
+      Data.Internal.Time
+      Paths_time_framework
+  hs-source-dirs:
+      src
+  build-depends:
+      QuickCheck
+    , base >=4.7 && <5
+    , either
+    , refined
+    , singletons
+    , smallcheck
+    , tasty
+    , tasty-smallcheck
+    , template-haskell
+  default-language: Haskell2010
+
+test-suite time-framework-spec
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Data.Chronon.Spec
+      Data.Period.Spec
+      Paths_time_framework
+  hs-source-dirs:
+      test/spec
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      QuickCheck
+    , base >=4.7 && <5
+    , either
+    , quickcheck-classes
+    , refined
+    , singletons
+    , smallcheck
+    , string-interpolate
+    , tasty
+    , tasty-quickcheck
+    , tasty-smallcheck
+    , template-haskell
+    , time-framework
+  default-language: Haskell2010

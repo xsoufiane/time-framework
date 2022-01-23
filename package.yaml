@@ -36,42 +36,43 @@ library:
   - Data.Time
   - Data.Chronon
   - Data.Period
-  - Data.Period.PeriodObs
   - Data.Period.PeriodChrononObs
   - Data.Period.DifferentPeriodObs
-  - Test.Relation.Identity
-  - Test.Relation.Identity.Laws
-  - Test.Relation.Order.StrictPartialOrder
-  - Test.Relation.Order.StrictPartialOrder.Laws
-  - Test.Relation.Order.LinearOrder
-  - Test.Relation.Order.LinearOrder.Laws
-  - Test.Relation.Order.LeftLinearOrder
-  - Test.Relation.Order.LeftLinearOrder.Laws
-  - Test.Relation.Order.RightLinearOrder
-  - Test.Relation.Order.RightLinearOrder.Laws
-  - Test.Relation.Order.PartialCyclicOrder
-  - Test.Relation.Order.PartialCyclicOrder.Laws
-  - Test.Relation.Order.CyclicOrder
-  - Test.Relation.Order.CyclicOrder.Laws
-  - Test.Relation.Order.PartialOrder
-  - Test.Relation.Order.PartialOrder.Laws
-  - Test.Relation.Order.TotalOrder
-  - Test.Relation.Order.TotalOrder.Laws
-  - Test.Relation.Order.Synchronicity
-  - Test.Relation.Order.Synchronicity.Laws
-  - Test.Relation.Order.Synchronicity.LinearOrder.Laws
-  - Test.Relation.Order.Synchronicity.Concurrency.Laws
-  - Test.Relation.Order.Concurrency
-  - Test.Relation.Order.Concurrency.Laws
-  - Test.Relation.Order.Concurrency.LinearOrder.Laws
-  - Test.Relation.Order.Betweenness
-  - Test.Relation.Order.Betweenness.Laws
-  - Test.Relation.Order.Begin
-  - Test.Relation.Order.Begin.Laws
-  - Test.Relation.Order.Begin.LinearOrder.Laws
-  - Test.Relation.Order.End
-  - Test.Relation.Order.End.Laws
-  - Test.Relation.Order.End.LinearOrder.Laws
+  - Relation.Identity
+  - Relation.Order
+  - Structure.Identity
+  - Structure.Identity.Laws
+  - Structure.Order.StrictPartialOrder
+  - Structure.Order.StrictPartialOrder.Laws
+  - Structure.Order.LinearOrder
+  - Structure.Order.LinearOrder.Laws
+  - Structure.Order.LeftLinearOrder
+  - Structure.Order.LeftLinearOrder.Laws
+  - Structure.Order.RightLinearOrder
+  - Structure.Order.RightLinearOrder.Laws
+  - Structure.Order.PartialCyclicOrder
+  - Structure.Order.PartialCyclicOrder.Laws
+  - Structure.Order.CyclicOrder
+  - Structure.Order.CyclicOrder.Laws
+  - Structure.Order.PartialOrder
+  - Structure.Order.PartialOrder.Laws
+  - Structure.Order.TotalOrder
+  - Structure.Order.TotalOrder.Laws
+  - Structure.Order.Synchronicity
+  - Structure.Order.Synchronicity.Laws
+  - Structure.Order.Synchronicity.LinearOrder.Laws
+  - Structure.Order.Synchronicity.Concurrency.Laws
+  - Structure.Order.Concurrency
+  - Structure.Order.Concurrency.Laws
+  - Structure.Order.Concurrency.LinearOrder.Laws
+  - Structure.Order.Betweenness
+  - Structure.Order.Betweenness.Laws
+  - Structure.Order.Begin
+  - Structure.Order.Begin.Laws
+  - Structure.Order.Begin.LinearOrder.Laws
+  - Structure.Order.End
+  - Structure.Order.End.Laws
+  - Structure.Order.End.LinearOrder.Laws
 
 tests:
   time-framework-spec:

@@ -1,25 +1,10 @@
-{-# OPTIONS_GHC -fno-warn-redundant-constraints #-}
+{-# LANGUAGE ConstrainedClassMethods #-}
 
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE UndecidableInstances #-}
+module Data.Time (Time) where
 
-module Data.Time 
-    (
-      Time
-    , module Data.Chronon
-    , module Data.Period
-    ) where
-
-import Data.Chronon
-import Data.Period
+import qualified Data.Internal.Time as I (Time)
 
 -------------------------------------------
 
-class Internal t => Time t
-instance Internal t => Time t
-
--- | Internal Time Class
-class Internal t
-
-instance Chronon t => Internal t
-instance Internal (Period c p)
+-- | Closed Time Type Class
+class I.Time t => Time t where

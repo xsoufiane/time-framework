@@ -13,16 +13,17 @@ import Test.QuickCheck
 import Test.Tasty.QuickCheck as QC
 import Test.Tasty
 
-import Data.Chronon (Chronon, ChrononObs(..))
-import Data.Period (Period(inf, sup), PeriodType(Closed), SPeriodType(SClosed), period)
-import Test.Relation.Order.PartialOrder (PartialOrder((<=)))
-import Test.Relation.Order.StrictPartialOrder (StrictPartialOrder((<)))
+import Data.Chronon (Chronon)
+import Data.Period (Period(inf, sup), PeriodType(Closed), SPeriodType(SClosed), period, includedIn)
+import Relation.Order as T (Order((<)))
+import Relation.Identity as I (Identity((===)))
+import Structure.Order.PartialOrder (PartialOrder((<=)))
+import Structure.Order.StrictPartialOrder (StrictPartialOrder((<)))
 
 import qualified Prelude as Pr ((<), (==))
 
-import qualified Data.Period.PeriodObs as Period ((<), includedIn)
-import qualified Test.Relation.Order.PartialOrder.Laws as PartialOrder (laws)
-import qualified Test.Relation.Order.StrictPartialOrder.Laws as StrictPartialOrder (laws)
+import qualified Structure.Order.PartialOrder.Laws as PartialOrder (laws)
+import qualified Structure.Order.StrictPartialOrder.Laws as StrictPartialOrder (laws)
 
 -----------------------------------------------------------------
 
@@ -30,6 +31,13 @@ import qualified Test.Relation.Order.StrictPartialOrder.Laws as StrictPartialOrd
 newtype IntChronon = Chronon Int
 instance Chronon IntChronon
 newtype ClosedPeriod = ClosedPeriod (Period 'Closed IntChronon)
+
+-- | Observations
+instance Order IntChronon where
+     Chronon x < Chronon y = (Pr.<) x y
+
+instance Identity IntChronon where     
+     Chronon x === Chronon y = (Pr.==) x y
 
 -- | Instances
 instance Arbitrary IntChronon where
@@ -53,17 +61,12 @@ instance Eq (Period 'Closed IntChronon) where
 instance Eq ClosedPeriod where
     ClosedPeriod x == ClosedPeriod y = (Pr.==) x y
 
--- | Observations
-instance ChrononObs IntChronon where
-     Chronon x < Chronon y = (Pr.<) x y
-     Chronon x === Chronon y = (Pr.==) x y
-
 -- | Axiomatization
 instance StrictPartialOrder ClosedPeriod where
-    ClosedPeriod x < ClosedPeriod y = (Period.<) x y
+    ClosedPeriod x < ClosedPeriod y = (T.<) x y
     
 instance PartialOrder ClosedPeriod where
-    ClosedPeriod x <= ClosedPeriod y = Period.includedIn x y    
+    ClosedPeriod x <= ClosedPeriod y = includedIn x y    
 
 -- | spec
 spec :: TestTree

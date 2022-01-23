@@ -5,73 +5,64 @@
 
 module Data.Chronon.Spec (spec) where
 
+import Prelude hiding ((<), (<=), cycle)
 import Test.QuickCheck hiding ((===))
 import Test.SmallCheck.Series (cons1, Serial(series))
 import Test.Tasty
 import Test.Tasty.QuickCheck as QC hiding ((===))
 import Test.Tasty.SmallCheck as SC
 
-import Prelude hiding ((<), cycle)
+import Data.Chronon
+import Relation.Order as Relation (Order((<), (<=), betweenness))
+import Structure.Identity (Identity((===)))
+import Structure.Order.Begin (Begin)
+import Structure.Order.Begin.Laws as Begin
+import Structure.Order.Begin.LinearOrder.Laws as LinearBegin
+import Structure.Order.Betweenness (Betweenness(betweenness))
+import Structure.Order.Betweenness.Laws as Betweenness
+import Structure.Order.Concurrency (Concurrency(concurrent))
+import Structure.Order.Concurrency.Laws as Concurrency
+import Structure.Order.Concurrency.LinearOrder.Laws as LinearConcurrency
+import Structure.Order.CyclicOrder (CyclicOrder)
+import Structure.Order.End (End)
+import Structure.Order.End.Laws as End
+import Structure.Order.End.LinearOrder.Laws as LinearEnd
+import Structure.Order.LeftLinearOrder (LeftLinearOrder)
+import Structure.Order.LinearOrder (LinearOrder)
+import Structure.Identity.Laws as Test.Identity
+import Structure.Order.PartialCyclicOrder (PartialCyclicOrder(cycle))
+import Structure.Order.RightLinearOrder (RightLinearOrder)
+import Structure.Order.StrictPartialOrder (StrictPartialOrder)
+import Structure.Order.Synchronicity (Synchronicity(synchronous))
+import Structure.Order.Synchronicity.Concurrency.Laws as ConcurrentSynchronicity
+import Structure.Order.Synchronicity.LinearOrder.Laws as LinearSynchronicity
+import Structure.Order.TotalOrder (TotalOrder)
+
 import qualified Prelude as P ((<), (==))
 
-import Data.Chronon
-import qualified Data.Chronon as Chronon ((<), (<=), (===), cycle, synchronous, concurrent, betweenness)
+import qualified Data.Chronon as Chronon (cycle, synchronous, concurrent)
+import qualified Relation.Identity as Relation (Identity((===)))
+import qualified Structure.Order.CyclicOrder.Laws as CyclicOrder
+import qualified Structure.Order.LeftLinearOrder.Laws as LeftLinearOrder
+import qualified Structure.Order.LinearOrder.Laws as LinearOrder
+import qualified Structure.Order.PartialCyclicOrder.Laws as PartialCyclicOrder
+import qualified Structure.Order.PartialOrder as Test (PartialOrder((<=)))
+import qualified Structure.Order.PartialOrder.Laws as PartialOrder
+import qualified Structure.Order.RightLinearOrder.Laws as RightLinearOrder
+import qualified Structure.Order.StrictPartialOrder.Laws as StrictPartialOrder (laws, (<))
+import qualified Structure.Order.TotalOrder.Laws as TotalOrder
+import qualified Structure.Order.Synchronicity.Laws as Synchronicity
 
-import Test.Relation.Identity (Identity((===)))
-import qualified Test.Relation.Identity.Laws as Identity
-
-import Test.Relation.Order.StrictPartialOrder (StrictPartialOrder)
-import qualified Test.Relation.Order.StrictPartialOrder.Laws as StrictPartialOrder (laws, (<))
-
-import Test.Relation.Order.LinearOrder (LinearOrder)
-import qualified Test.Relation.Order.LinearOrder.Laws as LinearOrder
-
-import Test.Relation.Order.RightLinearOrder (RightLinearOrder)
-import qualified Test.Relation.Order.RightLinearOrder.Laws as RightLinearOrder
-
-import Test.Relation.Order.LeftLinearOrder (LeftLinearOrder)
-import qualified Test.Relation.Order.LeftLinearOrder.Laws as LeftLinearOrder
-
-import Test.Relation.Order.PartialCyclicOrder (PartialCyclicOrder(cycle))
-import qualified Test.Relation.Order.PartialCyclicOrder.Laws as PartialCyclicOrder
-
-import Test.Relation.Order.CyclicOrder (CyclicOrder)
-import qualified Test.Relation.Order.CyclicOrder.Laws as CyclicOrder
-
-import Test.Relation.Order.PartialOrder (PartialOrder((<=)))
-import qualified Test.Relation.Order.PartialOrder.Laws as PartialOrder
-
-import Test.Relation.Order.TotalOrder (TotalOrder)
-import qualified Test.Relation.Order.TotalOrder.Laws as TotalOrder
-
-import Test.Relation.Order.Synchronicity (Synchronicity(synchronous))
-import Test.Relation.Order.Synchronicity.Laws as Synchronicity
-import Test.Relation.Order.Synchronicity.LinearOrder.Laws as LinearSynchronicity
-import Test.Relation.Order.Synchronicity.Concurrency.Laws as ConcurrentSynchronicity
-
-import Test.Relation.Order.Concurrency (Concurrency(concurrent))
-import Test.Relation.Order.Concurrency.Laws as Concurrency
-import Test.Relation.Order.Concurrency.LinearOrder.Laws as LinearConcurrency
-
-import Test.Relation.Order.Betweenness (Betweenness(betweenness))
-import Test.Relation.Order.Betweenness.Laws as Betweenness
-
-import Test.Relation.Order.Begin (Begin)
-import Test.Relation.Order.Begin.Laws as Begin
-import Test.Relation.Order.Begin.LinearOrder.Laws as LinearBegin
-
-import Test.Relation.Order.End (End)
-import Test.Relation.Order.End.Laws as End
-import Test.Relation.Order.End.LinearOrder.Laws as LinearEnd
-
--------------------------------------
+-------------------------------------------
 
 newtype IntChronon = Chronon Int deriving (Eq, Show)
 instance Chronon IntChronon
 
 -- | Observations
-instance ChrononObs IntChronon where
+instance Relation.Order IntChronon where
      Chronon x < Chronon y = (P.<) x y
+
+instance Relation.Identity IntChronon where  
      Chronon x === Chronon y = (P.==) x y
      
 instance CyclicChronon IntChronon where     
@@ -83,7 +74,7 @@ instance SynchronousChronon IntChronon where
 instance ConcurrentChronon IntChronon where
     concurrent x y = x == y
      
--- | Instances
+-- | Spec Instances
 instance Arbitrary IntChronon where
     arbitrary = Chronon <$> arbitrary
 
@@ -91,10 +82,10 @@ instance Serial IO IntChronon where
     series = cons1 Chronon
   
 instance Identity IntChronon where
-    (===) = (Chronon.===)
+    (===) = (Relation.===)
 
 instance StrictPartialOrder IntChronon where
-    (<) = (Chronon.<)
+    (<) = (Relation.<)
 
 instance LinearOrder IntChronon
 
@@ -107,8 +98,8 @@ instance PartialCyclicOrder IntChronon where
 
 instance CyclicOrder IntChronon
 
-instance PartialOrder IntChronon where
-    (<=) = (Chronon.<=)
+instance Test.PartialOrder IntChronon where
+    (<=) = (<=)
 
 instance TotalOrder IntChronon
 
@@ -119,7 +110,7 @@ instance Concurrency IntChronon where
     concurrent = Chronon.concurrent
     
 instance Betweenness IntChronon where
-    betweenness = Chronon.betweenness
+    betweenness = Relation.betweenness
 
 instance Begin IntChronon
 
@@ -131,7 +122,7 @@ spec = testGroup "Chronon Spec" [ relationLaws, orderLaws ]
 
 relationLaws :: TestTree
 relationLaws = testGroup "Relation Laws"
-    [ QC.testProperties "Identity" $ Identity.laws @IntChronon
+    [ QC.testProperties "Identity" $ Test.Identity.laws @IntChronon
     ]
 
 orderLaws :: TestTree
