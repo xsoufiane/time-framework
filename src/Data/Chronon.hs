@@ -21,4 +21,3 @@ class Chronon t => SynchronousChronon t where
 
 class Chronon t => ConcurrentChronon t where
     concurrent :: t -> t -> Bool
-  

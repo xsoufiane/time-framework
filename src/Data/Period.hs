@@ -19,16 +19,6 @@ module Data.Period
       -- * Constructors
     , period
     , periodTH
-    
-      -- * Constructors
-    , (==)
-    , starts
-    , finishes
-    , during
-    , contains
-    , includedIn
-    , overlaps
-    , meets
     ) where
 
 import Control.Exception.Base
@@ -85,32 +75,10 @@ periodTH
     -> Q (TExp (Period c t))
 periodTH _ x y = (refineTH_ @ValidPeriodBounds) $ Period x y
 
--- | Observations
-(==) :: Eq t => Period c t -> Period c t -> Bool
-x == y = (Pr.==) (inf x) (inf y) && (Pr.==) (sup x) (sup y)
-
-starts :: (Eq t, Order t)=> Period c t -> Period c t -> Bool
-starts x y = (Pr.==) (inf x) (inf y) && sup x < sup y
-
-finishes :: (Eq t, Order t) => Period c t -> Period c t -> Bool
-finishes x y = inf y < inf x && (Pr.==) (sup x) (sup y)
-
-during :: Order t => Period c t -> Period c t -> Bool
-during x y = inf y < inf x && sup x < sup y
-
-contains :: Order t => Period c t -> Period c t -> Bool
-contains x y = not $ during x y
-
-includedIn :: (Eq t, Order t) => Period c t -> Period c t -> Bool
-includedIn x y = during x y || x == y
-
-overlaps :: Order t => Period c t -> Period c t -> Bool
-overlaps x y = inf x < inf y && inf y < sup x && sup x < sup y
-
-meets :: Eq t => Period 'Closed t -> Period 'Closed t -> Bool
-meets x y = (Pr.==) (sup x) (inf y)
-
 -- | Useful Instances
+instance (Chronon t, Eq t) => Eq (Period c t) where
+    x == y = (Pr.==) (inf x) (inf y) && (Pr.==) (sup x) (sup y)
+    
 instance (Chronon t, Identity t) => Identity (Period c t) where
     x === y = inf x === inf y && sup x === sup y
 

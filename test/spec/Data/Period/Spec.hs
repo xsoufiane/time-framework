@@ -14,7 +14,8 @@ import Test.Tasty.QuickCheck as QC
 import Test.Tasty
 
 import Data.Chronon (Chronon)
-import Data.Period (Period(inf, sup), PeriodType(Closed), SPeriodType(SClosed), period, includedIn)
+import Data.Period (Period(inf, sup), PeriodType(Closed), SPeriodType(SClosed), period)
+import Data.Period.PeriodObs (includedIn)
 import Relation.Order as T (Order((<)))
 import Relation.Identity as I (Identity((===)))
 import Structure.Order.PartialOrder (PartialOrder((<=)))
@@ -54,10 +55,7 @@ instance Show ClosedPeriod where
 
 instance Eq IntChronon where
     Chronon x == Chronon y = (Pr.==) x y
-    
-instance Eq (Period 'Closed IntChronon) where
-    x == y = (Pr.==) (inf x) (inf y) && (Pr.==) (sup x) (sup y)
-    
+
 instance Eq ClosedPeriod where
     ClosedPeriod x == ClosedPeriod y = (Pr.==) x y
 

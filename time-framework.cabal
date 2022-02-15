@@ -29,6 +29,7 @@ library
       Data.Chronon
       Data.Period
       Data.Period.PeriodChrononObs
+      Data.Period.PeriodObs
       Data.Period.DifferentPeriodObs
       Relation.Identity
       Relation.Order
