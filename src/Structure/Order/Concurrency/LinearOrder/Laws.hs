@@ -3,7 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Order.Concurrency.LinearOrder.Laws (laws) where
+module Structure.Order.Concurrency.LinearOrder.Laws (Constraints, laws) where
 
 import Test.QuickCheck hiding ((===))
 

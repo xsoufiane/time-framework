@@ -3,7 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Order.PartialCyclicOrder.Laws (laws) where
+module Structure.Order.PartialCyclicOrder.Laws (Constraints, laws) where
 
 import Prelude hiding (cycle)
 import Test.QuickCheck

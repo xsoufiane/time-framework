@@ -3,7 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Order.LinearOrder.Laws where
+module Structure.Order.LinearOrder.Laws (Constraints, laws) where
 
 import Data.Bits (xor)
 import Prelude hiding ((<), (>))

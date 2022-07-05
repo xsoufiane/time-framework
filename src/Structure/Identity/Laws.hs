@@ -3,7 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Identity.Laws (laws) where
+module Structure.Identity.Laws (Constraints, laws) where
 
 import Test.QuickCheck hiding ((===))
 
@@ -27,7 +27,7 @@ prop_transitive = forAll gen (\(x, _, z) -> x === z)
 
 ---------------------------
 
-laws :: forall a. (Arbitrary a, Identity a, Show a) => [(String, Property)]
+laws :: forall a. Constraints a => [(String, Property)]
 laws =
     [ ("Irreflexive", prop_reflexive @a)
     , ("Asymmetric", prop_symmetric @a)

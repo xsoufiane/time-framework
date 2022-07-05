@@ -3,7 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Order.Synchronicity.Concurrency.Laws (laws) where
+module Structure.Order.Synchronicity.Concurrency.Laws (Constraints, laws) where
 
 import Test.QuickCheck hiding ((===))
 

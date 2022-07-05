@@ -3,7 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Order.Betweenness.Laws (laws) where
+module Structure.Order.Betweenness.Laws (Constraints, laws) where
 
 import Prelude hiding ((<))
 import Test.QuickCheck

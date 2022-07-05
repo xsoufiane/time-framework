@@ -3,13 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Order.StrictPartialOrder.Laws 
-    ( -- * Laws
-      laws
-      
-      -- * Class
-    , StrictPartialOrder(..)
-    ) where
+module Structure.Order.StrictPartialOrder.Laws (Constraints, laws) where
 
 import Prelude hiding ((<), (>))
 import Test.QuickCheck

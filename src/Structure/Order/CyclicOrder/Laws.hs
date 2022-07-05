@@ -3,7 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Order.CyclicOrder.Laws (laws) where
+module Structure.Order.CyclicOrder.Laws (Constraints, laws) where
 
 import Data.Bits (xor)  
 import Prelude hiding (cycle)

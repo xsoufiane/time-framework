@@ -3,7 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Order.Synchronicity.Laws (laws) where
+module Structure.Order.Synchronicity.Laws (Constraints, laws) where
 
 import Prelude hiding ((<))
 import Test.QuickCheck

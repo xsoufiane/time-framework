@@ -3,7 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Order.End.Laws (laws) where
+module Structure.Order.End.Laws (Constraints, laws) where
 
 import Prelude hiding ((<))
 import Test.SmallCheck

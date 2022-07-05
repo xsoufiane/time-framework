@@ -3,7 +3,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
-module Structure.Order.TotalOrder.Laws where
+module Structure.Order.TotalOrder.Laws (Constraints, laws) where
 
 import Prelude hiding ((<=), (>=))
 import Test.QuickCheck

@@ -49,7 +49,8 @@ import qualified Structure.Order.PartialCyclicOrder.Laws as PartialCyclicOrder
 import qualified Structure.Order.PartialOrder as Test (PartialOrder((<=)))
 import qualified Structure.Order.PartialOrder.Laws as PartialOrder
 import qualified Structure.Order.RightLinearOrder.Laws as RightLinearOrder
-import qualified Structure.Order.StrictPartialOrder.Laws as StrictPartialOrder (laws, (<))
+import qualified Structure.Order.StrictPartialOrder as StrictPartialOrder (StrictPartialOrder((<)))
+import qualified Structure.Order.StrictPartialOrder.Laws as StrictPartialOrder (laws)
 import qualified Structure.Order.TotalOrder.Laws as TotalOrder
 import qualified Structure.Order.Synchronicity.Laws as Synchronicity
 
