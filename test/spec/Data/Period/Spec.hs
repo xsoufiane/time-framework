@@ -17,7 +17,7 @@ import Data.Chronon (Chronon)
 import Data.Period (Period(inf, sup), PeriodType(Closed), SPeriodType(SClosed), period)
 import Data.Period.PeriodObs (includedIn)
 import Relation.Order as T (Order((<)))
-import Relation.Identity as I (Identity((===)))
+import Structure.Identity (Identity((===)))
 import Structure.Order.PartialOrder (PartialOrder((<=)))
 import Structure.Order.StrictPartialOrder (StrictPartialOrder((<)))
 

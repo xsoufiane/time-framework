@@ -31,7 +31,6 @@ library
       Data.Period.PeriodChrononObs
       Data.Period.PeriodObs
       Data.Period.DifferentPeriodObs
-      Relation.Identity
       Relation.Order
       Structure.Identity
       Structure.Identity.Laws

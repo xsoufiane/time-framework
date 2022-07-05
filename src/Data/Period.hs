@@ -30,7 +30,7 @@ import Refined
 
 import Data.Chronon
 import Relation.Order (Order((<), (<=)))
-import Relation.Identity (Identity((===)))
+import Structure.Identity (Identity((===)))
 
 import qualified Prelude as Pr ((==))
 

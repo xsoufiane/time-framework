@@ -41,7 +41,6 @@ import Structure.Order.TotalOrder (TotalOrder)
 import qualified Prelude as P ((<), (==))
 
 import qualified Data.Chronon as Chronon (cycle, synchronous, concurrent)
-import qualified Relation.Identity as Relation (Identity((===)))
 import qualified Structure.Order.CyclicOrder.Laws as CyclicOrder
 import qualified Structure.Order.LeftLinearOrder.Laws as LeftLinearOrder
 import qualified Structure.Order.LinearOrder.Laws as LinearOrder
@@ -63,7 +62,7 @@ instance Chronon IntChronon
 instance Relation.Order IntChronon where
      Chronon x < Chronon y = (P.<) x y
 
-instance Relation.Identity IntChronon where  
+instance Identity IntChronon where  
      Chronon x === Chronon y = (P.==) x y
      
 instance CyclicChronon IntChronon where     
@@ -81,9 +80,6 @@ instance Arbitrary IntChronon where
 
 instance Serial IO IntChronon where
     series = cons1 Chronon
-  
-instance Identity IntChronon where
-    (===) = (Relation.===)
 
 instance StrictPartialOrder IntChronon where
     (<) = (Relation.<)
